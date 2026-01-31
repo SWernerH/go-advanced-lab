@@ -139,3 +139,36 @@ func ExploreProcess(){
 	fmt.Println("no other processes canaccess this memory adress")
 }
 
+
+//part 5
+
+func DoubleValue(n int) int {
+	x = x * 2
+}
+
+func DoublePointer(n *int) {
+	*n = *n * 2
+}
+
+func CreateOnStack() int {
+	x := 42
+	return x
+}
+
+func CreateOnHeap() *int{
+	x := 20
+	return &x
+}
+
+func SwapValues(a, b int) (int, int) {
+	return b, a
+}
+
+func SwapPointers(a, b *int) {
+	*a, *b = *b, *a
+}
+
+func AnalyzeEscape() {
+	CreateOnStack()
+	CreateOnHeap()
+}
