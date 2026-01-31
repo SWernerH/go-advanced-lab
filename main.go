@@ -124,3 +124,18 @@ func compose (f func(int)int, g func(int)int,) func(int) int {
 	}
 }
 
+//part 4
+
+func ExploreProcess(){
+
+	fmt.Println("Process info:")
+	fmt.Println("current process ID:", os.Getpid())
+	fmt.Println("parent process ID:", os.Getppid())
+
+	data := []int{1,2,3,4,5}
+	fmt.Printlf("Memory address of data slice: %p\n", &data)
+	fmt.Printlf("Memory address of first element: %p\n", &data[0])
+
+	fmt.Println("no other processes canaccess this memory adress")
+}
+
