@@ -71,36 +71,34 @@ func MakerMuntiplier(factor int) func(int) int {
 	}
 }
 
-func MakeAccumulator(initial int) func(int) func(int) int func(int) int {
+func MakeAccumulator(initial int) (func(int), func(int), func() int) {
 
 	value := initial
-	add := funvc(x int) {
+	add := func(x int) {
 		value += x
 	}
-	subtract func(x int) {
+	subtract := func(x int) {
 		value -= x
 	}
 	get := func() int {
-	rerturn value
+		return value
 	}
 	return add, subtract, get
 }
 
 //part 3
 
-func Apply(nums[]int, operations func(int)int) []int {
-
+func Apply(nums []int, operation func(int) int) []int {
 	result := make([]int, len(nums))
-	for i, num = range nums {
-		result[i] = operations(num)
+	for i, num := range nums {
+		result[i] = operation(num)
 	}
 	return result
 }
 
-func filter(nums []int, predicate func (int) bool) []int {
-
+func Filter(nums []int, predicate func(int) bool) []int {
 	var result []int
-	for _, nums := range nums {
+	for _, num := range nums {
 		if predicate(num) {
 			result = append(result, num)
 		}
@@ -108,17 +106,15 @@ func filter(nums []int, predicate func (int) bool) []int {
 	return result
 }
 
-func Resuce(nums []int, initial in, operations func(int, int)int) int {
-
+func Reduce(nums []int, initial int, operation func(int, int) int) int {
 	acc := initial
-	for _, nums := range nums {
-		acc = operations(acc, num)
+	for _, num := range nums {
+		acc = operation(acc, num)
 	}
 	return acc
 }
 
-func compose (f func(int)int, g func(int)int,) func(int) int {
-
+func Compose(f func(int) int, g func(int) int) func(int) int {
 	return func(x int) int {
 		return f(g(x))
 	}
@@ -133,8 +129,8 @@ func ExploreProcess(){
 	fmt.Println("parent process ID:", os.Getppid())
 
 	data := []int{1,2,3,4,5}
-	fmt.Printlf("Memory address of data slice: %p\n", &data)
-	fmt.Printlf("Memory address of first element: %p\n", &data[0])
+	fmt.Printf("Memory address of data slice: %p\n", &data)
+	fmt.Printf("Memory address of first element: %p\n", &data[0])
 
 	fmt.Println("no other processes canaccess this memory adress")
 }
@@ -142,7 +138,7 @@ func ExploreProcess(){
 
 //part 5
 
-func DoubleValue(x int) int {
+func DoubleValue(x int) {
 	x = x * 2
 }
 
@@ -178,8 +174,8 @@ func AnalyzeEscape() {
 func main(){
 	ExploreProcess()
 
-	fmt.println("\n========Math operations========")
-	f0, _, := Factorial(0)
+	fmt.Println("\n========Math operations========")
+	f0, _ := Factorial(0)
 	f5, _ := Factorial(5)
 	f10, _ := Factorial(10)
 
@@ -202,7 +198,7 @@ func main(){
 	fmt.Println("Power(5,4):", power2)
 
 
-	fmt.println("\n********Counter Demonstration********")
+	fmt.Println("\n********Counter Demonstration********")
 
 	counter1 := MakeCounter(0)
 	counter2 := MakeCounter(100)
@@ -218,7 +214,7 @@ func main(){
 	fmt.Println("Doubler(5):", doubler(5))
 	fmt.Println("Tripler(5):", tripler(5))
 
-	fmt.println("\n--------Higer-order functions --------")
+	fmt.Println("\n--------Higer-order functions --------")
 
 	nums := []int{1,2,3,4,5,6,7,8,9,10}
 	fmt.Println("Original numbers:", nums)
@@ -226,30 +222,30 @@ func main(){
 	squared := Apply(nums, func(x int) int {return x * x})
 	fmt.Println("Squared numbers:", squared)
 
-	evens :=filter(nums, func(x int) bool {return x%2 == 0})
+	evens := Filter(nums, func(x int) bool {return x%2 == 0})
 	fmt.Println("Even numbers:", evens)
 
 	sum := Reduce(nums, 0, func(acc, curr int) int {return acc + curr})
 	fmt.Println("Sum of numbers:", sum)
 
-	DuobleThenAddTen := compose(func(x int)int {return x * 10}, func(x int) int {return x + 2})
-	fmt.println("Double then add ten to 5:", DuobleThenAddTen(5))
+	DuobleThenAddTen := Compose(func(x int)int {return x * 10}, func(x int) int {return x + 2})
+	fmt.Println("Double then add ten to 5:", DuobleThenAddTen(5))
 
-	fmt.println("\n~~~~~~~~Pointer Demonstration~~~~~~~~")
+	fmt.Println("\n~~~~~~~~Pointer Demonstration~~~~~~~~")
 
 	a := 5
 	b := 10
 
-	fmt.println("Before SwapValues: a =", a, ", b =", b)
+	fmt.Println("Before SwapValues: a =", a, ", b =", b)
 	a, b = SwapValues(a, b)
-	fmt.println("After SwapValues: a =", a, ", b =", b)
+	fmt.Println("After SwapValues: a =", a, ", b =", b)
 
 	c := 15
 	d := 20
 
-	fmt.println("Before SwapPointers: c =", c, ", d =", d)
+	fmt.Println("Before SwapPointers: c =", c, ", d =", d)
 	SwapPointers(&c, &d)
-	fmt.println("After SwapPointers: c =", c, ", d =", d)
+	fmt.Println("After SwapPointers: c =", c, ", d =", d)
 
 	AnalyzeEscape()
 }
