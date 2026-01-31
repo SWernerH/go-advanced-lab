@@ -53,3 +53,35 @@ func Power (base, exponent int)(int, error){
 }
 
 
+//part 2
+
+func MakeCounter(start int) func() int {
+
+	counter := start
+	return func() int {
+		counter++
+		return counter
+	}
+}
+
+func MakerMuntiplier(factor int) func(int) int {
+
+	return func(x int) int{
+		return x * factor
+	}
+}
+
+func MakeAccumulator(initial int) func(int) func(int) int func(int) int {
+
+	value := initial
+	add := funvc(x int) {
+		value += x
+	}
+	subtract func(x int) {
+		value -= x
+	}
+	get := func() int {
+	rerturn value
+	}
+	return add, subtract, get
+}
