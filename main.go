@@ -142,12 +142,12 @@ func ExploreProcess(){
 
 //part 5
 
-func DoubleValue(n int) int {
+func DoubleValue(x int) int {
 	x = x * 2
 }
 
-func DoublePointer(n *int) {
-	*n = *n * 2
+func DoublePointer(x *int) {
+	*x = *x * 2
 }
 
 func CreateOnStack() int {
@@ -171,4 +171,85 @@ func SwapPointers(a, b *int) {
 func AnalyzeEscape() {
 	CreateOnStack()
 	CreateOnHeap()
+}
+
+//part 6
+
+func main(){
+	ExploreProcess()
+
+	fmt.println("\n========Math operations========")
+	f0, _, := Factorial(0)
+	f5, _ := Factorial(5)
+	f10, _ := Factorial(10)
+
+	fmt.Println("Factorial(0):", f0)
+	fmt.Println("Factorial(5):", f5)
+	fmt.Println("Factorial(10):", f10)
+
+	p17, _ := IsPrime(17)
+	p18, _ := IsPrime(18)
+	p20, _ := IsPrime(20)
+
+	fmt.Println("IsPrime(17):", p17)
+	fmt.Println("IsPrime(18):", p18)
+	fmt.Println("IsPrime(20):", p20)
+
+	power1, _ := Power(2, 3)
+	power2, _ := Power(5, 4)
+
+	fmt.Println("Power(2,3):", power1)
+	fmt.Println("Power(5,4):", power2)
+
+
+	fmt.println("\n********Counter Demonstration********")
+
+	counter1 := MakeCounter(0)
+	counter2 := MakeCounter(100)
+	
+	fmt.Println("Counter1:", counter1())
+	fmt.Println("Counter2:", counter2())
+	fmt.Println("Counter1:", counter1())
+	fmt.Println("Counter2:", counter2())
+
+	doubler := MakerMuntiplier(14)
+	tripler := MakerMuntiplier(3)
+	
+	fmt.Println("Doubler(5):", doubler(5))
+	fmt.Println("Tripler(5):", tripler(5))
+
+	fmt.println("\n--------Higer-order functions --------")
+
+	nums := []int{1,2,3,4,5,6,7,8,9,10}
+	fmt.Println("Original numbers:", nums)
+
+	squared := Apply(nums, func(x int) int {return x * x})
+	fmt.Println("Squared numbers:", squared)
+
+	evens :=filter(nums, func(x int) bool {return x%2 == 0})
+	fmt.Println("Even numbers:", evens)
+
+	sum := Reduce(nums, 0, func(acc, curr int) int {return acc + curr})
+	fmt.Println("Sum of numbers:", sum)
+
+	DuobleThenAddTen := compose(func(x int)int {return x * 10}, func(x int) int {return x + 2})
+	fmt.println("Double then add ten to 5:", DuobleThenAddTen(5))
+
+	fmt.println("\n~~~~~~~~Pointer Demonstration~~~~~~~~")
+
+	a := 5
+	b := 10
+
+	fmt.println("Before SwapValues: a =", a, ", b =", b)
+	a, b = SwapValues(a, b)
+	fmt.println("After SwapValues: a =", a, ", b =", b)
+
+	c := 15
+	d := 20
+
+	fmt.println("Before SwapPointers: c =", c, ", d =", d)
+	SwapPointers(&c, &d)
+	fmt.println("After SwapPointers: c =", c, ", d =", d)
+
+	AnalyzeEscape()
 }
